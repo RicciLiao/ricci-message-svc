@@ -2,6 +2,7 @@ create table `message_code`
 (
     `id`           bigint auto_increment primary key,
     `code`         varchar(50)  not null,
+    `type`         varchar(1)   not null,
     `project_code` varchar(20)  not null,
     `description`  varchar(255) not null,
     `is_active`    int          not null,

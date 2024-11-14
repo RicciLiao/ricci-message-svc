@@ -19,7 +19,8 @@ public class MessageCodePo implements Serializable {
     @Serial
     private static final long serialVersionUID = 444534533935173941L;
     private Long id;
-    private String code;
+    private Long code;
+    private String type;
     private String projectCode;
     private String description;
     private Integer isActive;
@@ -42,12 +43,22 @@ public class MessageCodePo implements Serializable {
 
     @Basic
     @Column(name = "code")
-    public String getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
+    }
+
+    @Basic
+    @Column(name = "type")
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Basic
@@ -134,11 +145,11 @@ public class MessageCodePo implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MessageCodePo that)) return false;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getCode(), that.getCode()) && Objects.equals(getProjectCode(), that.getProjectCode()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getIsActive(), that.getIsActive()) && Objects.equals(getCreatedBy(), that.getCreatedBy()) && Objects.equals(getCreatedDtm(), that.getCreatedDtm()) && Objects.equals(getUpdatedBy(), that.getUpdatedBy()) && Objects.equals(getUpdatedDtm(), that.getUpdatedDtm()) && Objects.equals(getVersion(), that.getVersion());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getCode(), that.getCode()) && Objects.equals(getType(), that.getType()) && Objects.equals(getProjectCode(), that.getProjectCode()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getIsActive(), that.getIsActive()) && Objects.equals(getCreatedBy(), that.getCreatedBy()) && Objects.equals(getCreatedDtm(), that.getCreatedDtm()) && Objects.equals(getUpdatedBy(), that.getUpdatedBy()) && Objects.equals(getUpdatedDtm(), that.getUpdatedDtm()) && Objects.equals(getVersion(), that.getVersion());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode(), getProjectCode(), getDescription(), getIsActive(), getCreatedBy(), getCreatedDtm(), getUpdatedBy(), getUpdatedDtm(), getVersion());
+        return Objects.hash(getId(), getCode(), getType(), getProjectCode(), getDescription(), getIsActive(), getCreatedBy(), getCreatedDtm(), getUpdatedBy(), getUpdatedDtm(), getVersion());
     }
 }

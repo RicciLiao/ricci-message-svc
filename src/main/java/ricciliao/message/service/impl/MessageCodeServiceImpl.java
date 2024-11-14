@@ -21,7 +21,7 @@ public class MessageCodeServiceImpl implements MessageCodeService {
     }
 
     @Override
-    public MessageCodeDto getCode(String projectCode, String code) {
+    public MessageCodeDto getCode(String projectCode, Long code) {
         Optional<MessageCodePo> poOptional = messageCodeRepository.findByCodeAndProjectCode(code, projectCode);
 
         return poOptional.map(MessagePojoUtils::convert2Dto).orElse(null);

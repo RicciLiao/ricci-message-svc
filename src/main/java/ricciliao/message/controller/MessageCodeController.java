@@ -12,9 +12,9 @@ import ricciliao.common.component.response.ResponseUtils;
 import ricciliao.common.component.response.ResponseVo;
 import ricciliao.message.service.MessageCodeService;
 
-@Tag(name = "")
+@Tag(name = "MessageCodeController")
 @RestController
-public class MessageController {
+public class MessageCodeController {
 
     private MessageCodeService messageCodeService;
 
@@ -24,9 +24,9 @@ public class MessageController {
     }
 
     @Operation
-    @GetMapping("/message/{p}/{c}")
+    @GetMapping("/code/{p}/{c}")
     public ResponseVo<ResponseData> message(@PathVariable("p") String p,
-                                            @PathVariable("c") String c) {
+                                            @PathVariable("c") Long c) {
 
         return ResponseUtils.successResponse(messageCodeService.getCode(p, c));
     }

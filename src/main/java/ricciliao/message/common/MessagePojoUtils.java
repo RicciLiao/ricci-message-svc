@@ -13,6 +13,7 @@ public class MessagePojoUtils {
         MessageCodeDto dto = new MessageCodeDto();
         dto.setId(po.getId());
         dto.setCode(po.getCode());
+        dto.setType(po.getType());
         dto.setProjectCode(po.getProjectCode());
         dto.setDescription(po.getDescription());
         dto.setActive(CommonHelper.toBoolean(po.getIsActive()));

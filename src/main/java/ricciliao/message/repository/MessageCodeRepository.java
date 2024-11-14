@@ -98,5 +98,5 @@ public interface MessageCodeRepository extends JpaRepository<MessageCodePo, Long
     @Override
     <S extends MessageCodePo, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
 
-    Optional<MessageCodePo> findByCodeAndProjectCode(String code, String projectCode);
+    Optional<MessageCodePo> findByCodeAndProjectCode(Long code, String projectCode);
 }
