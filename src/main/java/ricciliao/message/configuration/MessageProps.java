@@ -1,14 +1,13 @@
 package ricciliao.message.configuration;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import ricciliao.common.component.context.YamlPropertiesReader;
+import ricciliao.common.component.context.ApplicationProperties;
 
 @Configuration
-public class ApplicationProperties {
+public class MessageProps extends ApplicationProperties {
 
-    public ApplicationProperties() {
-        YamlPropertiesReader yamlProperties = new YamlPropertiesReader(new ClassPathResource("application.yml"));
+    public MessageProps() {
+        super();
         this.timeZone = yamlProperties.getProperty("time-zone", String.class);
         this.redisHost = yamlProperties.getProperty("redis.host", String.class);
         this.redisPort = yamlProperties.getProperty("redis.port", Integer.class);

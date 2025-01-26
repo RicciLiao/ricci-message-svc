@@ -17,13 +17,13 @@ import ricciliao.dynamic.aop.DynamicPointcutAdvisor;
 import java.util.TimeZone;
 
 @Configuration
-public class WebMvcConfig {
+public class MessageBeanConfig {
 
-    private ApplicationProperties applicationProperties;
+    private MessageProps messageProps;
 
     @Autowired
-    public void setApplicationProperties(ApplicationProperties applicationProperties) {
-        this.applicationProperties = applicationProperties;
+    public void setMessageProps(MessageProps messageProps) {
+        this.messageProps = messageProps;
     }
 
     @Bean
@@ -31,7 +31,7 @@ public class WebMvcConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.setTimeZone(TimeZone.getTimeZone(applicationProperties.getTimeZone()));
+        objectMapper.setTimeZone(TimeZone.getTimeZone(messageProps.getTimeZone()));
         // objectMapper java.time.LocalDate/LocalDateTime
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.registerModule(new JavaTimeModule());
@@ -43,7 +43,7 @@ public class WebMvcConfig {
     public DynamicPointcutAdvisor responseDataAspect() {
 
         return new DynamicPointcutAdvisor(
-                applicationProperties.getDynamicAopPointCutController(),
+                messageProps.getDynamicAopPointCutController(),
                 new ResponseEmptyDataAspect()
         );
     }
@@ -52,7 +52,7 @@ public class WebMvcConfig {
     public DynamicPointcutAdvisor controllerAspect() {
 
         return new DynamicPointcutAdvisor(
-                applicationProperties.getDynamicAopPointCutController(),
+                messageProps.getDynamicAopPointCutController(),
                 new ControllerAspect()
         );
     }
