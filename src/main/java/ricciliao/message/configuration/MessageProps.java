@@ -1,30 +1,30 @@
 package ricciliao.message.configuration;
 
 import org.springframework.context.annotation.Configuration;
-import ricciliao.common.component.context.ApplicationProperties;
+import ricciliao.common.component.props.ApplicationProperties;
 
 @Configuration
 public class MessageProps extends ApplicationProperties {
 
     public MessageProps() {
         super();
-        this.timeZone = yamlProperties.getProperty("time-zone", String.class);
-        this.redisHost = yamlProperties.getProperty("redis.host", String.class);
-        this.redisPort = yamlProperties.getProperty("redis.port", Integer.class);
-        this.password = yamlProperties.getProperty("redis.password", String.class);
+        this.timeZone = this.getReader().getProperty("time-zone", String.class);
+        this.redisHost = this.getReader().getProperty("redis.host", String.class);
+        this.redisPort = this.getReader().getProperty("redis.port", Integer.class);
+        this.password = this.getReader().getProperty("redis.password", String.class);
         /*this.messageRedisProps =
                 new StringRedisWrapperConfig.RedisPropsBo(
                         redisHost,
                         redisPort,
                         password,
-                        yamlProperties.getProperty("redis.db.message.database", Integer.class),
-                        Duration.ofMillis(yamlProperties.getProperty("redis.db.message.timeout", Long.class)),
-                        Duration.ofMillis(yamlProperties.getProperty("redis.db.message.ttl", Long.class)),
-                        yamlProperties.getProperty("redis.db.message.pool.min-idle", Integer.class),
-                        yamlProperties.getProperty("redis.db.message.pool.max-idle", Integer.class),
-                        yamlProperties.getProperty("redis.db.message.pool.max-total", Integer.class)
+                        this.getYamlProperties().getProperty("redis.db.message.database", Integer.class),
+                        Duration.ofMillis(this.getYamlProperties().getProperty("redis.db.message.timeout", Long.class)),
+                        Duration.ofMillis(this.getYamlProperties().getProperty("redis.db.message.ttl", Long.class)),
+                        this.getYamlProperties().getProperty("redis.db.message.pool.min-idle", Integer.class),
+                        this.getYamlProperties().getProperty("redis.db.message.pool.max-idle", Integer.class),
+                        this.getYamlProperties().getProperty("redis.db.message.pool.max-total", Integer.class)
                 );*/
-        this.dynamicAopPointCutController = yamlProperties.getProperty("dynamic-aop.point-cut.controller", String.class);
+        this.dynamicAopPointCutController = this.getReader().getProperty("dynamic-aop.point-cut.controller", String.class);
     }
 
     private final String timeZone;

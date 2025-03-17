@@ -3,10 +3,9 @@ package ricciliao.message.pojo.dto;
 import ricciliao.common.component.response.ResponseData;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Objects;
 
-public class MessageCodeDto implements Serializable, ResponseData {
+public class MessageCodeDto implements ResponseData {
     @Serial
     private static final long serialVersionUID = 4664705260817765973L;
     private Long id;
