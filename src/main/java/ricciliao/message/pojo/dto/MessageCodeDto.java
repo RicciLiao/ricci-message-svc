@@ -1,6 +1,6 @@
 package ricciliao.message.pojo.dto;
 
-import ricciliao.common.component.response.ResponseData;
+import ricciliao.x.component.response.ResponseData;
 
 import java.io.Serial;
 import java.util.Objects;
@@ -9,9 +9,9 @@ public class MessageCodeDto implements ResponseData {
     @Serial
     private static final long serialVersionUID = 4664705260817765973L;
     private Long id;
-    private Long code;
-    private String type;
-    private String projectCode;
+    private String code;
+    private String level;
+    private String consumer;
     private String description;
     private Boolean active;
     private Long createdBy;
@@ -28,28 +28,28 @@ public class MessageCodeDto implements ResponseData {
         this.id = id;
     }
 
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public String getType() {
-        return type;
+    public String getLevel() {
+        return level;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public String getProjectCode() {
-        return projectCode;
+    public String getConsumer() {
+        return consumer;
     }
 
-    public void setProjectCode(String projectCode) {
-        this.projectCode = projectCode;
+    public void setConsumer(String consumer) {
+        this.consumer = consumer;
     }
 
     public String getDescription() {
@@ -112,11 +112,11 @@ public class MessageCodeDto implements ResponseData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MessageCodeDto dto)) return false;
-        return Objects.equals(getId(), dto.getId()) && Objects.equals(getCode(), dto.getCode()) && Objects.equals(getType(), dto.getType()) && Objects.equals(getProjectCode(), dto.getProjectCode()) && Objects.equals(getDescription(), dto.getDescription()) && Objects.equals(getActive(), dto.getActive()) && Objects.equals(getCreatedBy(), dto.getCreatedBy()) && Objects.equals(getCreatedDtm(), dto.getCreatedDtm()) && Objects.equals(getUpdatedBy(), dto.getUpdatedBy()) && Objects.equals(getUpdatedDtm(), dto.getUpdatedDtm()) && Objects.equals(getVersion(), dto.getVersion());
+        return Objects.equals(getId(), dto.getId()) && Objects.equals(getCode(), dto.getCode()) && Objects.equals(getLevel(), dto.getLevel()) && Objects.equals(getConsumer(), dto.getConsumer()) && Objects.equals(getDescription(), dto.getDescription()) && Objects.equals(getActive(), dto.getActive()) && Objects.equals(getCreatedBy(), dto.getCreatedBy()) && Objects.equals(getCreatedDtm(), dto.getCreatedDtm()) && Objects.equals(getUpdatedBy(), dto.getUpdatedBy()) && Objects.equals(getUpdatedDtm(), dto.getUpdatedDtm()) && Objects.equals(getVersion(), dto.getVersion());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode(), getType(), getProjectCode(), getDescription(), getActive(), getCreatedBy(), getCreatedDtm(), getUpdatedBy(), getUpdatedDtm(), getVersion());
+        return Objects.hash(getId(), getCode(), getLevel(), getConsumer(), getDescription(), getActive(), getCreatedBy(), getCreatedDtm(), getUpdatedBy(), getUpdatedDtm(), getVersion());
     }
 }

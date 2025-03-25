@@ -2,9 +2,9 @@ package ricciliao.message.aspect;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.Ordered;
-import ricciliao.common.component.exception.CmnParameterException;
-import ricciliao.common.component.response.ResponseUtils;
-import ricciliao.dynamic.aop.DynamicAspect;
+import ricciliao.x.aop.DynamicAspect;
+import ricciliao.x.component.exception.CmnParameterException;
+import ricciliao.x.component.response.ResponseUtils;
 
 public class ControllerAspect extends DynamicAspect implements Ordered {
 

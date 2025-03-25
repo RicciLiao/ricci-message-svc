@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import ricciliao.common.component.response.ResponseData;
-import ricciliao.common.component.response.ResponseUtils;
-import ricciliao.common.component.response.ResponseVo;
 import ricciliao.message.service.MessageCodeService;
+import ricciliao.x.component.response.ResponseData;
+import ricciliao.x.component.response.ResponseSimpleData;
+import ricciliao.x.component.response.ResponseUtils;
+import ricciliao.x.component.response.ResponseVo;
 
 @Tag(name = "MessageCodeController")
 @RestController
@@ -24,11 +25,18 @@ public class MessageCodeController {
     }
 
     @Operation
-    @GetMapping("/code/{p}/{c}")
-    public ResponseVo<ResponseData> message(@PathVariable("p") String p,
-                                            @PathVariable("c") Long c) {
+    @GetMapping("/code/{code}/{c}")
+    public ResponseVo<ResponseData> message(@PathVariable("code") String code,
+                                            @PathVariable("c") String c) {
 
-        return ResponseUtils.successResponse(messageCodeService.getCode(p, c));
+        return ResponseUtils.successResponse(messageCodeService.getCode(code, c));
+    }
+
+    @Operation
+    @GetMapping("/refreshCache")
+    public ResponseVo<ResponseData> refreshCache() {
+
+        return ResponseUtils.successResponse(new ResponseSimpleData.Bool(messageCodeService.refreshCache(false)));
     }
 
 }

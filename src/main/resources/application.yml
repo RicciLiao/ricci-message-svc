@@ -18,7 +18,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-time-zone: GMT+8
-dynamic-aop:
-  point-cut:
-    controller: execution(public ricciliao.common.component.response.ResponseVo ricciliao.message.controller.*.*(..))
+ricciliao:
+  x:
+    common:
+      time-zone: GMT+8
+    cache-consumer:
+      consumer: message
+      operation-list:
+        - store: code
+          store-class-name: ricciliao.x.cache.pojo.message.MessageCodeCacheDto

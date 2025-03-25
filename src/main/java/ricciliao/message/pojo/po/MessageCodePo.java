@@ -19,11 +19,11 @@ public class MessageCodePo implements Serializable {
     @Serial
     private static final long serialVersionUID = 444534533935173941L;
     private Long id;
-    private Long code;
-    private String type;
-    private String projectCode;
+    private String code;
+    private String level;
+    private String consumer;
     private String description;
-    private Integer isActive;
+    private Boolean active;
     private Long createdBy;
     private LocalDateTime createdDtm;
     private Long updatedBy;
@@ -43,32 +43,32 @@ public class MessageCodePo implements Serializable {
 
     @Basic
     @Column(name = "code")
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
     @Basic
-    @Column(name = "type")
-    public String getType() {
-        return type;
+    @Column(name = "level")
+    public String getLevel() {
+        return level;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLevel(String type) {
+        this.level = type;
     }
 
     @Basic
-    @Column(name = "project_code")
-    public String getProjectCode() {
-        return projectCode;
+    @Column(name = "consumer")
+    public String getConsumer() {
+        return consumer;
     }
 
-    public void setProjectCode(String projectCode) {
-        this.projectCode = projectCode;
+    public void setConsumer(String projectCode) {
+        this.consumer = projectCode;
     }
 
     @Basic
@@ -82,13 +82,13 @@ public class MessageCodePo implements Serializable {
     }
 
     @Basic
-    @Column(name = "is_active")
-    public Integer getIsActive() {
-        return isActive;
+    @Column(name = "active")
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setIsActive(Integer isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean isActive) {
+        this.active = isActive;
     }
 
     @Basic
@@ -145,11 +145,11 @@ public class MessageCodePo implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MessageCodePo that)) return false;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getCode(), that.getCode()) && Objects.equals(getType(), that.getType()) && Objects.equals(getProjectCode(), that.getProjectCode()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getIsActive(), that.getIsActive()) && Objects.equals(getCreatedBy(), that.getCreatedBy()) && Objects.equals(getCreatedDtm(), that.getCreatedDtm()) && Objects.equals(getUpdatedBy(), that.getUpdatedBy()) && Objects.equals(getUpdatedDtm(), that.getUpdatedDtm()) && Objects.equals(getVersion(), that.getVersion());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getCode(), that.getCode()) && Objects.equals(getLevel(), that.getLevel()) && Objects.equals(getConsumer(), that.getConsumer()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getActive(), that.getActive()) && Objects.equals(getCreatedBy(), that.getCreatedBy()) && Objects.equals(getCreatedDtm(), that.getCreatedDtm()) && Objects.equals(getUpdatedBy(), that.getUpdatedBy()) && Objects.equals(getUpdatedDtm(), that.getUpdatedDtm()) && Objects.equals(getVersion(), that.getVersion());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCode(), getType(), getProjectCode(), getDescription(), getIsActive(), getCreatedBy(), getCreatedDtm(), getUpdatedBy(), getUpdatedDtm(), getVersion());
+        return Objects.hash(getId(), getCode(), getLevel(), getConsumer(), getDescription(), getActive(), getCreatedBy(), getCreatedDtm(), getUpdatedBy(), getUpdatedDtm(), getVersion());
     }
 }
