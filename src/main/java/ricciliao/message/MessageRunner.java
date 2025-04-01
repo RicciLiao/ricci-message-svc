@@ -18,7 +18,7 @@ public class MessageRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        //messageCodeService.refreshCache(false);
+        messageCodeService.refreshCache(false);
     }
 
 }
