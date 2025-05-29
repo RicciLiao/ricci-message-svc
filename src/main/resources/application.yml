@@ -1,6 +1,7 @@
 spring:
   application:
     version: @project.version@
+    name: message
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://192.168.165.34:3306/message
@@ -27,3 +28,6 @@ ricciliao:
       operation-list:
         - store: code
           store-class-name: ricciliao.x.cache.pojo.message.MessageCodeCacheDto
+    log:
+      executor:
+        enable: true

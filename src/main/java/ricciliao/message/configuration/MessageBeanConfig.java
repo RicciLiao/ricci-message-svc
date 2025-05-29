@@ -15,7 +15,7 @@ public class MessageBeanConfig {
         FilterRegistrationBean<MessageFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new MessageFilter());
         registrationBean.addUrlPatterns("/*");
-        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        registrationBean.setOrder(Ordered.LOWEST_PRECEDENCE - 1);
         registrationBean.setName("httpServletWrapperFilter");
 
         return registrationBean;

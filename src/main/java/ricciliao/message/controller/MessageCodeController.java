@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ricciliao.message.service.MessageCodeService;
+import ricciliao.x.component.response.ResponseCollectionData;
 import ricciliao.x.component.response.ResponseData;
 import ricciliao.x.component.response.ResponseSimpleData;
 import ricciliao.x.component.response.ResponseUtils;
@@ -25,11 +26,18 @@ public class MessageCodeController {
     }
 
     @Operation
-    @GetMapping("/code/{code}/{c}")
+    @GetMapping("/code/{code}/{consumer}")
     public ResponseVo<ResponseData> message(@PathVariable("code") String code,
-                                            @PathVariable("c") String c) {
+                                            @PathVariable("consumer") String consumer) {
 
-        return ResponseUtils.successResponse(messageCodeService.getCode(code, c));
+        return ResponseUtils.successResponse(messageCodeService.getCode(code, consumer));
+    }
+
+    @Operation
+    @GetMapping("/code/{consumer}")
+    public ResponseVo<ResponseData> message(@PathVariable("consumer") String consumer) {
+
+        return ResponseUtils.successResponse(ResponseCollectionData.data(messageCodeService.listCode(consumer)));
     }
 
     @Operation
