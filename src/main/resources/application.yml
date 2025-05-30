@@ -4,9 +4,9 @@ spring:
     name: message
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.165.31:3306/message
-    username: message
-    password: asl123456
+    url: jdbc:mysql://${DATABASE_URL}/message
+    username: ${DATABASE_USER_NAME}
+    password: ${DATABASE_USER_PASSWORD}
     hikari:
       max-lifetime: 30000
       maximum-pool-size: 20
