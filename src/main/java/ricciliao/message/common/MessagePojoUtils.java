@@ -1,8 +1,8 @@
 package ricciliao.message.common;
 
+import ricciliao.message.cache.pojo.MessageCodeCacheDto;
 import ricciliao.message.pojo.dto.MessageCodeDto;
 import ricciliao.message.pojo.po.MessageCodePo;
-import ricciliao.x.cache.pojo.message.MessageCodeCacheDto;
 import ricciliao.x.component.utils.CoreUtils;
 
 public class MessagePojoUtils {

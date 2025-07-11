@@ -23,11 +23,12 @@ ricciliao:
   x:
     common:
       time-zone: GMT+8
+    log:
+      executor:
+        enable: true
     cache-consumer:
       consumer: message
       operation-list:
         - store: code
-          store-class-name: ricciliao.x.cache.pojo.message.MessageCodeCacheDto
-    log:
-      executor:
-        enable: true
+          store-class-name: ricciliao.message.cache.pojo.MessageCodeCacheDto
+

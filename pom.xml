@@ -15,9 +15,9 @@
     <description>Message Service</description>
 
     <properties>
-        <java.version>20</java.version>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -57,7 +57,7 @@
         </dependency>
         <dependency>
             <groupId>ricciliao.x</groupId>
-            <artifactId>cache-consumer-message</artifactId>
+            <artifactId>cache-consumer-component</artifactId>
         </dependency>
 
         <dependency>

@@ -1,14 +1,26 @@
 package ricciliao.message.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 import ricciliao.message.filter.MessageFilter;
 import ricciliao.x.log.MdcSupportFilter;
 
 @Configuration
 public class MessageBeanConfig {
+
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Bean
     public FilterRegistrationBean<MessageFilter> messageFilter() {
@@ -30,6 +42,14 @@ public class MessageBeanConfig {
         registrationBean.setName("mdcSupportFilter");
 
         return registrationBean;
+    }
+
+    @Bean
+    public RestTemplate messageRestTemplate() {
+
+        return new RestTemplateBuilder()
+                .messageConverters(new MappingJackson2HttpMessageConverter(objectMapper))
+                .build();
     }
 
 }

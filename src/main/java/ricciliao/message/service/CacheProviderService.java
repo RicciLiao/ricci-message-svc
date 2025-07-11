@@ -1,7 +1,8 @@
 package ricciliao.message.service;
 
-import ricciliao.x.cache.ConsumerCacheRestService;
-import ricciliao.x.cache.pojo.message.MessageCodeCacheDto;
+
+import ricciliao.message.cache.pojo.MessageCodeCacheDto;
+import ricciliao.x.starter.cache.ConsumerCacheRestService;
 
 public interface CacheProviderService {
 
