@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.IntFunction;
 
 @Service("messageCodeService")
 public class MessageCodeServiceImpl implements MessageCodeService {
@@ -38,10 +37,6 @@ public class MessageCodeServiceImpl implements MessageCodeService {
     @Autowired
     public void setMessageCodeRepository(MessageCodeRepository messageCodeRepository) {
         this.messageCodeRepository = messageCodeRepository;
-    }
-
-    public static <T> T[] createGenericArray(IntFunction<T[]> genericArrayCreator, int arrayLength) {
-        return genericArrayCreator.apply(arrayLength);
     }
 
     @Override
