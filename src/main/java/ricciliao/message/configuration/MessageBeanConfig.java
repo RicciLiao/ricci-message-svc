@@ -10,6 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import ricciliao.message.filter.MessageFilter;
+import ricciliao.x.component.response.ResponseHttpMessageConverter;
 import ricciliao.x.log.MdcSupportFilter;
 
 @Configuration
@@ -48,7 +49,10 @@ public class MessageBeanConfig {
     public RestTemplate messageRestTemplate() {
 
         return new RestTemplateBuilder()
-                .messageConverters(new MappingJackson2HttpMessageConverter(objectMapper))
+                .messageConverters(
+                        new ResponseHttpMessageConverter(objectMapper),
+                        new MappingJackson2HttpMessageConverter(objectMapper)
+                )
                 .build();
     }
 

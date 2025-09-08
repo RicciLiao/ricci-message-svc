@@ -1,6 +1,7 @@
 package ricciliao.message.pojo.dto;
 
-import ricciliao.x.component.response.ResponseData;
+
+import ricciliao.x.component.response.data.ResponseData;
 
 import java.io.Serial;
 import java.util.Objects;

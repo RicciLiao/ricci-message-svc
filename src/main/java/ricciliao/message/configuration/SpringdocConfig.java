@@ -11,19 +11,20 @@ import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.customizers.OpenApiCustomizer;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import ricciliao.x.component.props.CommonProperties;
 
 @Configuration
 public class SpringdocConfig {
 
-    private String projectVersion;
+    private CommonProperties commonProps;
 
-    @Value("${spring.application.version}")
-    public void setProjectVersion(String projectVersion) {
-        this.projectVersion = projectVersion;
+    @Autowired
+    public void setCommonProps(CommonProperties commonProps) {
+        this.commonProps = commonProps;
     }
 
     @Bean
@@ -38,7 +39,7 @@ public class SpringdocConfig {
                                         .contact(new Contact().name("A contact"))
                                         .license(new License().name("A License"))
                                         .summary("A summary")
-                                        .version(projectVersion)
+                                        .version(commonProps.getVersion())
                         )
                         .addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION))
                         .components(

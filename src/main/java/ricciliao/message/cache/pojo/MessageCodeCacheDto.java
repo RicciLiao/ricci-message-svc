@@ -58,4 +58,9 @@ public class MessageCodeCacheDto implements ConsumerCacheData {
         return Objects.hash(getCode(), getLevel(), getConsumer(), getDescription());
     }
 
+    @Override
+    public String generateCacheKey() {
+
+        return String.format("%s_%s", this.getCode(), this.getLevel());
+    }
 }
