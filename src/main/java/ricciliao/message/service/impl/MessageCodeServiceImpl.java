@@ -42,6 +42,10 @@ public class MessageCodeServiceImpl implements MessageCodeService {
     @Override
     public MessageCodeDto getCode(String code, String consumer) {
         ConsumerOp.Single<MessageCodeCacheDto> single = cacheProviderService.code().get(consumer + "_" + code);
+        if (Objects.isNull(single)) {
+
+            return null;
+        }
 
         return MessagePojoUtils.convert2Dto(single.getData().getData());
     }
