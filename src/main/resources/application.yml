@@ -30,6 +30,8 @@ ricciliao:
   x:
     common:
       time-zone: GMT+8
+      consumer: message
+      version: ${project.version}
     log:
       executor:
         enable: true

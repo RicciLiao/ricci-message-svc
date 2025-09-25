@@ -5,14 +5,14 @@ import jakarta.servlet.ServletException;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import ricciliao.x.component.servlet.ContentCachingFilter;
-import ricciliao.x.log.AuditLoggerFactory;
-import ricciliao.x.log.logger.AuditLogger;
+import ricciliao.x.log.api.XLogger;
+import ricciliao.x.log.api.XLoggerFactory;
 
 import java.io.IOException;
 
 public class MessageFilter extends ContentCachingFilter {
 
-    private static final AuditLogger logger = AuditLoggerFactory.getLogger(MessageFilter.class);
+    private static final XLogger logger = XLoggerFactory.getLogger(MessageFilter.class);
 
     @Override
     public void doFilter(ContentCachingRequestWrapper requestWrapper, ContentCachingResponseWrapper responseWrapper, FilterChain chain) throws ServletException, IOException {
