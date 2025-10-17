@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import ricciliao.message.pojo.po.MessageCodePo;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -103,5 +103,5 @@ public interface MessageCodeRepository extends JpaRepository<MessageCodePo, Long
     Optional<MessageCodePo> findByCodeAndConsumer(String code, String consumer);
 
     @Query("select max(updatedDtm) from MessageCodePo")
-    LocalDateTime refreshCache();
+    Instant refreshCache();
 }

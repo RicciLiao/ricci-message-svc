@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -25,10 +25,10 @@ public class MessageCodePo implements Serializable {
     private String description;
     private Boolean active;
     private Long createdBy;
-    private LocalDateTime createdDtm;
+    private Instant createdDtm;
     private Long updatedBy;
-    private LocalDateTime updatedDtm;
-    private LocalDateTime version;
+    private Instant updatedDtm;
+    private Instant version;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -103,11 +103,11 @@ public class MessageCodePo implements Serializable {
 
     @Basic
     @Column(name = "created_dtm")
-    public LocalDateTime getCreatedDtm() {
+    public Instant getCreatedDtm() {
         return createdDtm;
     }
 
-    public void setCreatedDtm(LocalDateTime createdDtm) {
+    public void setCreatedDtm(Instant createdDtm) {
         this.createdDtm = createdDtm;
     }
 
@@ -123,21 +123,21 @@ public class MessageCodePo implements Serializable {
 
     @Basic
     @Column(name = "updated_dtm")
-    public LocalDateTime getUpdatedDtm() {
+    public Instant getUpdatedDtm() {
         return updatedDtm;
     }
 
-    public void setUpdatedDtm(LocalDateTime updatedDtm) {
+    public void setUpdatedDtm(Instant updatedDtm) {
         this.updatedDtm = updatedDtm;
     }
 
     @Basic
     @Column(name = "version")
-    public LocalDateTime getVersion() {
+    public Instant getVersion() {
         return version;
     }
 
-    public void setVersion(LocalDateTime version) {
+    public void setVersion(Instant version) {
         this.version = version;
     }
 

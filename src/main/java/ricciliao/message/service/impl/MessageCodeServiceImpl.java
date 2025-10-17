@@ -17,7 +17,7 @@ import ricciliao.x.cache.pojo.ProviderInfo;
 import ricciliao.x.cache.query.CacheBatchQuery;
 import ricciliao.x.cache.query.CacheQuery;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -74,7 +74,7 @@ public class MessageCodeServiceImpl implements MessageCodeService {
 
     @Override
     public boolean refreshCache(boolean focus) {
-        LocalDateTime dbMaxDate = messageCodeRepository.refreshCache();
+        Instant dbMaxDate = messageCodeRepository.refreshCache();
         ProviderInfo providerInfo = cacheProviderService.code().providerInfo();
         if (Objects.isNull(providerInfo.getMaxUpdatedDtm()) || dbMaxDate.isAfter(providerInfo.getMaxUpdatedDtm())) {
             cacheProviderService.code().batchDelete(new CacheBatchQuery());

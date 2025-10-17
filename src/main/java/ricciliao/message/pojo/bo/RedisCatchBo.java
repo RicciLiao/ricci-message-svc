@@ -5,7 +5,7 @@ import ricciliao.x.component.random.RandomGenerator;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 public class RedisCatchBo implements Serializable {
@@ -13,18 +13,18 @@ public class RedisCatchBo implements Serializable {
     private static final long serialVersionUID = 8938462924539717763L;
 
     private final String id = RandomGenerator.nextString(12).generate();
-    private final LocalDateTime createdDtm = LocalDateTime.now();
-    private LocalDateTime updatedDtm = LocalDateTime.now();
+    private final Instant createdDtm = Instant.now();
+    private Instant updatedDtm = Instant.now();
 
-    public LocalDateTime getUpdatedDtm() {
+    public Instant getUpdatedDtm() {
         return updatedDtm;
     }
 
-    public void setUpdatedDtm(LocalDateTime updatedDtm) {
+    public void setUpdatedDtm(Instant updatedDtm) {
         this.updatedDtm = updatedDtm;
     }
 
-    public LocalDateTime getCreatedDtm() {
+    public Instant getCreatedDtm() {
         return createdDtm;
     }
 

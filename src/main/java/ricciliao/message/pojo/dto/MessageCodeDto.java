@@ -4,6 +4,7 @@ package ricciliao.message.pojo.dto;
 import ricciliao.x.component.response.data.ResponseData;
 
 import java.io.Serial;
+import java.time.Instant;
 import java.util.Objects;
 
 public class MessageCodeDto implements ResponseData {
@@ -16,10 +17,10 @@ public class MessageCodeDto implements ResponseData {
     private String description;
     private Boolean active;
     private Long createdBy;
-    private Long createdDtm;
+    private Instant createdDtm;
     private Long updatedBy;
-    private Long updatedDtm;
-    private Long version;
+    private Instant updatedDtm;
+    private Instant version;
 
     public Long getId() {
         return id;
@@ -77,11 +78,11 @@ public class MessageCodeDto implements ResponseData {
         this.createdBy = createdBy;
     }
 
-    public Long getCreatedDtm() {
+    public Instant getCreatedDtm() {
         return createdDtm;
     }
 
-    public void setCreatedDtm(Long createdDtm) {
+    public void setCreatedDtm(Instant createdDtm) {
         this.createdDtm = createdDtm;
     }
 
@@ -93,19 +94,19 @@ public class MessageCodeDto implements ResponseData {
         this.updatedBy = updatedBy;
     }
 
-    public Long getUpdatedDtm() {
+    public Instant getUpdatedDtm() {
         return updatedDtm;
     }
 
-    public void setUpdatedDtm(Long updatedDtm) {
+    public void setUpdatedDtm(Instant updatedDtm) {
         this.updatedDtm = updatedDtm;
     }
 
-    public Long getVersion() {
+    public Instant getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(Instant version) {
         this.version = version;
     }
 

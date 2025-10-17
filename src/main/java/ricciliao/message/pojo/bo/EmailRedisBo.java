@@ -2,7 +2,7 @@ package ricciliao.message.pojo.bo;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 public class EmailRedisBo extends RedisCatchBo implements Serializable {
@@ -13,7 +13,7 @@ public class EmailRedisBo extends RedisCatchBo implements Serializable {
     private String to;
     private String typeCd;
     private boolean sent = false;
-    private LocalDateTime sentDtm;
+    private Instant sentDtm;
 
     public String getFrom() {
         return from;
@@ -47,11 +47,11 @@ public class EmailRedisBo extends RedisCatchBo implements Serializable {
         this.sent = send;
     }
 
-    public LocalDateTime getSentDtm() {
+    public Instant getSentDtm() {
         return sentDtm;
     }
 
-    public void setSentDtm(LocalDateTime sentDtm) {
+    public void setSentDtm(Instant sentDtm) {
         this.sentDtm = sentDtm;
     }
 
