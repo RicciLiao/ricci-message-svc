@@ -10,7 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import ricciliao.message.filter.MessageFilter;
-import ricciliao.x.component.response.ResponseHttpMessageConverter;
+import ricciliao.x.component.payload.response.ResponseHttpMessageConverter;
 import ricciliao.x.log.MdcSupportFilter;
 
 @Configuration

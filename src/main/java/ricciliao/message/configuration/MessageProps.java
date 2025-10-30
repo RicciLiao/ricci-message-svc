@@ -8,12 +8,12 @@ import ricciliao.x.starter.XProperties;
 @Configuration("messageProps")
 public class MessageProps extends ApplicationProperties {
 
+    private final XProperties xProps;
+
     public MessageProps(@Autowired XProperties xProperties) {
         super();
         this.xProps = xProperties;
     }
-
-    private final XProperties xProps;
 
     public XProperties getxProps() {
         return xProps;

@@ -1,13 +1,13 @@
 package ricciliao.message.pojo.dto;
 
 
-import ricciliao.x.component.response.data.ResponseData;
+import ricciliao.x.component.payload.PayloadData;
 
 import java.io.Serial;
 import java.time.Instant;
 import java.util.Objects;
 
-public class MessageCodeDto implements ResponseData {
+public class MessageCodeDto implements PayloadData {
     @Serial
     private static final long serialVersionUID = 4664705260817765973L;
     private Long id;
