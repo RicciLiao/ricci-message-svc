@@ -79,7 +79,9 @@ public class MessageCodeServiceImpl implements MessageCodeService {
         if (Objects.isNull(providerInfo)
                 || Objects.isNull(providerInfo.getMaxUpdatedDtm())
                 || dbMaxDate.isAfter(providerInfo.getMaxUpdatedDtm())) {
-            cacheProviderService.code().batchDelete(new CacheBatchQuery());
+            CacheBatchQuery query = new CacheBatchQuery();
+            query.setLimit(null);
+            cacheProviderService.code().batchDelete(query);
 
             SimpleData.Bool bool = cacheProviderService.code().batchCreate(
                     ConsumerOperation.of(
