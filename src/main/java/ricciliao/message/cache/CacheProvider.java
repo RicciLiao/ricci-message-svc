@@ -1,15 +1,14 @@
-package ricciliao.message.service.impl;
+package ricciliao.message.cache;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import ricciliao.message.cache.pojo.MessageCodeCacheDto;
-import ricciliao.message.service.CacheProviderService;
 import ricciliao.x.starter.cache.ConsumerCacheRestService;
 
-@Service("cacheProviderService")
-public class CacheProviderServiceImpl implements CacheProviderService {
+@Component("cacheProvider")
+public class CacheProvider {
 
     private ConsumerCacheRestService<MessageCodeCacheDto> codeConsumerCacheRestService;
 
@@ -19,7 +18,6 @@ public class CacheProviderServiceImpl implements CacheProviderService {
         this.codeConsumerCacheRestService = codeConsumerCacheRestService;
     }
 
-    @Override
     public ConsumerCacheRestService<MessageCodeCacheDto> code() {
 
         return codeConsumerCacheRestService;

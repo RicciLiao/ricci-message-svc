@@ -35,8 +35,7 @@ ricciliao:
     log:
       executor:
         enable: true
-    cache-consumer:
-      consumer: message
+    cache-consumer-client:
       operation-list:
         - store: code
           store-class-name: ricciliao.message.cache.pojo.MessageCodeCacheDto
