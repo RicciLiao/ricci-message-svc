@@ -31,7 +31,11 @@ ricciliao:
     common:
       time-zone: GMT+8
       consumer: message
-      version: ${project.version}
+      springdoc:
+        title: Message
+        description: Message Service
+        summary: 🎖 Inspiration
+        enable: true
     log:
       executor:
         enable: true
