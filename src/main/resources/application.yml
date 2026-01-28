@@ -29,7 +29,6 @@ management:
 ricciliao:
   x:
     common:
-      time-zone: GMT+8
       consumer: message
       springdoc:
         title: Message
@@ -39,8 +38,9 @@ ricciliao:
     log:
       executor:
         enable: true
-    cache-consumer-client:
+    mcp:
+      url: http://127.0.0.1:8083/operation
       operation-list:
         - store: code
-          store-class-name: ricciliao.message.cache.pojo.MessageCodeCacheDto
+          data-class-name: ricciliao.message.cache.pojo.MessageCodeCacheDto
 

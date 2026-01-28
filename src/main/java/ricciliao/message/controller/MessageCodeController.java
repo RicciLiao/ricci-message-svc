@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ricciliao.message.service.MessageCodeService;
 import ricciliao.x.component.payload.PayloadData;
-import ricciliao.x.component.payload.SimpleData;
+import ricciliao.x.component.payload.SimplePayloadData;
 import ricciliao.x.component.payload.response.Response;
 import ricciliao.x.component.payload.response.ResponseUtils;
 
@@ -36,14 +36,14 @@ public class MessageCodeController {
     @GetMapping("/code/{consumer}")
     public Response<PayloadData> message(@PathVariable("consumer") String consumer) {
 
-        return ResponseUtils.success(SimpleData.of(messageCodeService.listCode(consumer)));
+        return ResponseUtils.success(SimplePayloadData.of(messageCodeService.listCode(consumer)));
     }
 
     @Operation
     @GetMapping("/refreshCache")
     public Response<PayloadData> refreshCache() {
 
-        return ResponseUtils.success(SimpleData.of(messageCodeService.refreshCache(false)));
+        return ResponseUtils.success(SimplePayloadData.of(messageCodeService.refreshCache(false)));
     }
 
 }

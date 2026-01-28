@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ricciliao.message.cache.pojo.MessageCodeCacheDto;
-import ricciliao.x.starter.cache.ConsumerCacheRestService;
+import ricciliao.x.starter.mcp.ConsumerCacheRestService;
 
 @Component("cacheProvider")
 public class CacheProvider {

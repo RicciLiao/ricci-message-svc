@@ -1,11 +1,11 @@
 package ricciliao.message.cache.pojo;
 
-import ricciliao.x.cache.ConsumerStore;
+import ricciliao.x.mcp.ConsumerCacheData;
 
 import java.io.Serial;
 import java.util.Objects;
 
-public class MessageCodeCacheDto implements ConsumerStore {
+public class MessageCodeCacheDto implements ConsumerCacheData {
     @Serial
     private static final long serialVersionUID = 921069393141718604L;
 
@@ -59,8 +59,8 @@ public class MessageCodeCacheDto implements ConsumerStore {
     }
 
     @Override
-    public String generateCacheKey() {
+    public String generateUid() {
 
-        return String.format("%s_%s", this.getCode(), this.getLevel());
+        return String.format("%s_%s", this.getConsumer(), this.getCode());
     }
 }

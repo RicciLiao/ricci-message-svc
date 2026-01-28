@@ -9,12 +9,11 @@ import ricciliao.message.common.MessagePojoUtils;
 import ricciliao.message.pojo.dto.MessageCodeDto;
 import ricciliao.message.repository.MessageCodeRepository;
 import ricciliao.message.service.MessageCodeService;
-import ricciliao.x.cache.pojo.ConsumerCache;
-import ricciliao.x.cache.pojo.ConsumerOperation;
-import ricciliao.x.cache.pojo.ProviderInfo;
-import ricciliao.x.cache.query.CacheBatchQuery;
-import ricciliao.x.cache.query.CacheQuery;
-import ricciliao.x.component.payload.SimpleData;
+import ricciliao.x.component.payload.SimplePayloadData;
+import ricciliao.x.mcp.ConsumerCache;
+import ricciliao.x.mcp.McpProviderInfo;
+import ricciliao.x.mcp.query.McpCriteria;
+import ricciliao.x.mcp.query.McpQuery;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -45,27 +44,27 @@ public class MessageCodeServiceImpl implements MessageCodeService {
             return null;
         }
 
-        return MessagePojoUtils.convert2Dto(cache.getStore());
+        return MessagePojoUtils.convert2Dto(cache.getData());
     }
 
     @Override
     public List<MessageCodeDto> listCode(String consumer) {
-        CacheBatchQuery query = new CacheBatchQuery();
-        query.getCriteriaMap().put(CacheQuery.Property.CACHE_KEY, consumer + "_*");
-        SimpleData.Collection<ConsumerCache<MessageCodeCacheDto>> collection = cacheProvider.code().list(query);
-        if (CollectionUtils.isEmpty(collection.result())) {
+        McpQuery query = new McpQuery();
+        query.getCriteriaMap().put(McpCriteria.Property.ID, consumer + "_*");
+        SimplePayloadData.Collection<ConsumerCache<MessageCodeCacheDto>> collection = cacheProvider.code().list(query);
+        if (CollectionUtils.isEmpty(collection.data())) {
 
             return Collections.emptyList();
         }
 
 
-        return collection.result().stream()
+        return collection.data().stream()
                 .map(cache -> {
                     MessageCodeDto dto = new MessageCodeDto();
-                    dto.setCode(cache.getStore().getCode());
-                    dto.setLevel(cache.getStore().getLevel());
-                    dto.setConsumer(cache.getStore().getConsumer());
-                    dto.setDescription(cache.getStore().getDescription());
+                    dto.setCode(cache.getData().getCode());
+                    dto.setLevel(cache.getData().getLevel());
+                    dto.setConsumer(cache.getData().getConsumer());
+                    dto.setDescription(cache.getData().getDescription());
 
                     return dto;
                 })
@@ -75,36 +74,31 @@ public class MessageCodeServiceImpl implements MessageCodeService {
     @Override
     public boolean refreshCache(boolean focus) {
         Instant dbMaxDate = messageCodeRepository.refreshCache();
-        ProviderInfo providerInfo = cacheProvider.code().providerInfo();
+        McpProviderInfo providerInfo = cacheProvider.code().info();
         if (Objects.isNull(providerInfo)
                 || Objects.isNull(providerInfo.getMaxUpdatedDtm())
                 || dbMaxDate.isAfter(providerInfo.getMaxUpdatedDtm())) {
-            CacheBatchQuery query = new CacheBatchQuery();
+            McpQuery query = new McpQuery();
             query.setLimit(null);
-            cacheProvider.code().batchDelete(query);
+            cacheProvider.code().delete(query);
+            SimplePayloadData.Bool bool = cacheProvider.code().create(
+                    messageCodeRepository.findAll().stream()
+                            .map(po -> {
+                                ConsumerCache<MessageCodeCacheDto> cache = ConsumerCache.of(new MessageCodeCacheDto());
+                                cache.getData().setCode(po.getCode());
+                                cache.getData().setLevel(po.getLevel());
+                                cache.getData().setConsumer(po.getConsumer());
+                                cache.getData().setDescription(po.getDescription());
+                                cache.setCreatedDtm(po.getCreatedDtm());
+                                cache.setUpdatedDtm(po.getUpdatedDtm());
 
-            SimpleData.Bool bool = cacheProvider.code().batchCreate(
-                    ConsumerOperation.of(
-                            messageCodeRepository.findAll().stream()
-                                    .map(po -> {
-                                        ConsumerCache<MessageCodeCacheDto> cache = new ConsumerCache<>(new MessageCodeCacheDto());
-                                        cache.setCacheKey(po.getConsumer() + "_" + po.getCode());
-                                        cache.getStore().setCode(po.getCode());
-                                        cache.getStore().setLevel(po.getLevel());
-                                        cache.getStore().setConsumer(po.getConsumer());
-                                        cache.getStore().setDescription(po.getDescription());
-                                        cache.setCreatedDtm(po.getCreatedDtm());
-                                        cache.setUpdatedDtm(po.getUpdatedDtm());
-
-                                        return cache;
-                                    })
-                                    .toList()
-                    )
+                                return cache;
+                            })
+                            .toList()
             );
 
-            return Objects.nonNull(bool) && bool.result();
+            return Objects.nonNull(bool) && bool.data();
         }
-
 
         return false;
     }
