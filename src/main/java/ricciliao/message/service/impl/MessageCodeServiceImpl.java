@@ -2,12 +2,15 @@ package ricciliao.message.service.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import ricciliao.message.cache.CacheProvider;
 import ricciliao.message.cache.pojo.MessageCodeCacheDto;
 import ricciliao.message.common.MessagePojoUtils;
 import ricciliao.message.pojo.dto.MessageCodeDto;
-import ricciliao.message.repository.MessageCodeRepository;
+import ricciliao.message.repository.MessageCodePrimaryRepository;
+import ricciliao.message.repository.MessageCodeSecondaryRepository;
 import ricciliao.message.service.MessageCodeService;
 import ricciliao.x.component.payload.SimplePayloadData;
 import ricciliao.x.mcp.ConsumerCache;
@@ -17,23 +20,36 @@ import ricciliao.x.mcp.query.McpQuery;
 
 import java.time.Instant;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 @Service("messageCodeService")
 public class MessageCodeServiceImpl implements MessageCodeService {
 
-    private MessageCodeRepository messageCodeRepository;
+    private MessageCodePrimaryRepository messageCodePrimaryRepository;
+    private MessageCodeSecondaryRepository messageCodeSecondaryRepository;
     private CacheProvider cacheProvider;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
+
+    @Autowired
+    public void setMessageCodePrimaryRepository(MessageCodePrimaryRepository messageCodePrimaryRepository) {
+        this.messageCodePrimaryRepository = messageCodePrimaryRepository;
+    }
+
+    @Autowired
+    public void setMessageCodeSecondaryRepository(MessageCodeSecondaryRepository messageCodeSecondaryRepository) {
+        this.messageCodeSecondaryRepository = messageCodeSecondaryRepository;
+    }
 
     @Autowired
     public void setCacheProvider(CacheProvider cacheProvider) {
         this.cacheProvider = cacheProvider;
-    }
-
-    @Autowired
-    public void setMessageCodeRepository(MessageCodeRepository messageCodeRepository) {
-        this.messageCodeRepository = messageCodeRepository;
     }
 
     @Override
@@ -73,7 +89,9 @@ public class MessageCodeServiceImpl implements MessageCodeService {
 
     @Override
     public boolean refreshCache(boolean focus) {
-        Instant dbMaxDate = messageCodeRepository.refreshCache();
+        Instant primaryMaxDate = messageCodePrimaryRepository.refreshCache();
+        Instant secondaryMaxDate = messageCodeSecondaryRepository.refreshCache();
+        Instant dbMaxDate = primaryMaxDate.isAfter(secondaryMaxDate) ? primaryMaxDate : secondaryMaxDate;
         McpProviderInfo providerInfo = cacheProvider.code().info();
         if (Objects.isNull(providerInfo)
                 || Objects.isNull(providerInfo.getMaxUpdatedDtm())
@@ -82,15 +100,13 @@ public class MessageCodeServiceImpl implements MessageCodeService {
             query.setLimit(null);
             cacheProvider.code().delete(query);
             SimplePayloadData.Bool bool = cacheProvider.code().create(
-                    messageCodeRepository.findAll().stream()
-                            .map(po -> {
+                    this.listAll().stream()
+                            .map(dto -> {
                                 ConsumerCache<MessageCodeCacheDto> cache = ConsumerCache.of(new MessageCodeCacheDto());
-                                cache.getData().setCode(po.getCode());
-                                cache.getData().setLevel(po.getLevel());
-                                cache.getData().setConsumer(po.getConsumer());
-                                cache.getData().setDescription(po.getDescription());
-                                cache.setCreatedDtm(po.getCreatedDtm());
-                                cache.setUpdatedDtm(po.getUpdatedDtm());
+                                cache.getData().setCode(dto.getCode());
+                                cache.getData().setLevel(dto.getLevel());
+                                cache.getData().setConsumer(dto.getConsumer());
+                                cache.getData().setDescription(dto.getDescription());
 
                                 return cache;
                             })
@@ -101,6 +117,33 @@ public class MessageCodeServiceImpl implements MessageCodeService {
         }
 
         return false;
+    }
+
+    @Override
+    public List<MessageCodeDto> listAll() {
+
+        return namedParameterJdbcTemplate.query(
+                """
+                        select rpad(p.code, 4, 0) + s.code as code,
+                               ifnull(s.level, p.level)    as level,
+                               s.consumer                  as consumer,
+                               s.description               as description,
+                               s.updated_dtm               as updatedDtm
+                        from message_code_secondary s
+                                 cross join message_code_primary p
+                        where p.code <> 0
+                        union
+                        select p.code,
+                               p.level,
+                               s.consumer,
+                               p.description,
+                               p.updated_dtm
+                        from message_code_primary p
+                                 cross join (select distinct consumer from message_code_secondary) as s
+                        """,
+                new HashMap<>(),
+                new BeanPropertyRowMapper<>(MessageCodeDto.class)
+        );
     }
 
 }

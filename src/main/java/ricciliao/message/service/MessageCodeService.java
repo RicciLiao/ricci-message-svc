@@ -12,4 +12,6 @@ public interface MessageCodeService {
 
     boolean refreshCache(boolean focus);
 
+    List<MessageCodeDto> listAll();
+
 }

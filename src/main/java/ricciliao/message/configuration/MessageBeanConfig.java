@@ -2,12 +2,14 @@ package ricciliao.message.configuration;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import ricciliao.message.filter.MessageFilter;
 import ricciliao.x.log.MdcSupportFilter;
 
 @Configuration
+@ComponentScan(basePackages = "ricciliao.x.starter.common")
 public class MessageBeanConfig {
 
     @Bean

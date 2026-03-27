@@ -46,4 +46,13 @@ public class MessageCodeController {
         return ResponseUtils.success(SimplePayloadData.of(messageCodeService.refreshCache(false)));
     }
 
+    @Operation
+    @GetMapping("/listAll")
+    public Response<PayloadData> listAll() {
+
+        return ResponseUtils.success(SimplePayloadData.of(messageCodeService.listAll()));
+    }
+
+
+
 }

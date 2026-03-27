@@ -6,7 +6,7 @@ import ricciliao.x.component.props.ApplicationProperties;
 import ricciliao.x.starter.XProperties;
 
 @Configuration("messageProps")
-public class MessageProps extends ApplicationProperties {
+public class MessageProps implements ApplicationProperties {
 
     private final XProperties xProps;
 

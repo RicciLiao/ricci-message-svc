@@ -9,16 +9,16 @@ public class MessageCodeCacheDto implements ConsumerCacheData {
     @Serial
     private static final long serialVersionUID = 921069393141718604L;
 
-    private String code;
+    private Long code;
     private String level;
     private String consumer;
     private String description;
 
-    public String getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 
