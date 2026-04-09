@@ -1,7 +1,7 @@
 create table message_code_secondary
 (
     id          bigint auto_increment primary key,
-    code        bigint       not null comment 'message identity code, unique with consumer.',
+    code        decimal(3)   not null comment 'message identity code, unique with consumer.',
     consumer    varchar(50)  not null comment 'message identity consumer(project/application), unique with code.',
     level       char         null comment 'override primary level.',
     description varchar(255) not null comment 'message content.',

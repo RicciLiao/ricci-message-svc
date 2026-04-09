@@ -1,17 +1,17 @@
 package ricciliao.message.service;
 
-import ricciliao.message.pojo.dto.MessageCodeDto;
+import ricciliao.message.pojo.dto.response.GetMessageCodeDto;
 
 import java.util.List;
 
 public interface MessageCodeService {
 
-    MessageCodeDto getCode(String code, String consumer);
+    GetMessageCodeDto getCode(String code, String consumer);
 
-    List<MessageCodeDto> listCode(String consumer);
+    List<GetMessageCodeDto> listCode(String consumer);
 
     boolean refreshCache(boolean focus);
 
-    List<MessageCodeDto> listAll();
+    List<GetMessageCodeDto> listAll();
 
 }

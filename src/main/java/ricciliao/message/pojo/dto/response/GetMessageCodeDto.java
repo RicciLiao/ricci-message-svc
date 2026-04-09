@@ -1,23 +1,23 @@
-package ricciliao.message.pojo.dto;
+package ricciliao.message.pojo.dto.response;
 
 
 import ricciliao.x.component.payload.PayloadData;
 
 import java.io.Serial;
 
-public class MessageCodeDto implements PayloadData {
+public class GetMessageCodeDto implements PayloadData {
     @Serial
     private static final long serialVersionUID = 4664705260817765973L;
-    private Long code;
+    private String code;
     private String level;
     private String consumer;
     private String description;
 
-    public Long getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

@@ -7,11 +7,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import ricciliao.message.cache.CacheProvider;
 import ricciliao.message.cache.pojo.MessageCodeCacheDto;
-import ricciliao.message.common.MessagePojoUtils;
-import ricciliao.message.pojo.dto.MessageCodeDto;
+import ricciliao.message.pojo.bo.MessageCombineBo;
+import ricciliao.message.pojo.dto.response.GetMessageCodeDto;
 import ricciliao.message.repository.MessageCodePrimaryRepository;
 import ricciliao.message.repository.MessageCodeSecondaryRepository;
 import ricciliao.message.service.MessageCodeService;
+import ricciliao.message.utils.MessagePojoUtils;
 import ricciliao.x.component.payload.SimplePayloadData;
 import ricciliao.x.mcp.ConsumerCache;
 import ricciliao.x.mcp.McpProviderInfo;
@@ -53,7 +54,7 @@ public class MessageCodeServiceImpl implements MessageCodeService {
     }
 
     @Override
-    public MessageCodeDto getCode(String code, String consumer) {
+    public GetMessageCodeDto getCode(String code, String consumer) {
         ConsumerCache<MessageCodeCacheDto> cache = cacheProvider.code().get(consumer + "_" + code);
         if (Objects.isNull(cache)) {
 
@@ -64,7 +65,7 @@ public class MessageCodeServiceImpl implements MessageCodeService {
     }
 
     @Override
-    public List<MessageCodeDto> listCode(String consumer) {
+    public List<GetMessageCodeDto> listCode(String consumer) {
         McpQuery query = new McpQuery();
         query.getCriteriaMap().put(McpCriteria.Property.ID, consumer + "_*");
         SimplePayloadData.Collection<ConsumerCache<MessageCodeCacheDto>> collection = cacheProvider.code().list(query);
@@ -76,7 +77,7 @@ public class MessageCodeServiceImpl implements MessageCodeService {
 
         return collection.data().stream()
                 .map(cache -> {
-                    MessageCodeDto dto = new MessageCodeDto();
+                    GetMessageCodeDto dto = new GetMessageCodeDto();
                     dto.setCode(cache.getData().getCode());
                     dto.setLevel(cache.getData().getLevel());
                     dto.setConsumer(cache.getData().getConsumer());
@@ -94,8 +95,8 @@ public class MessageCodeServiceImpl implements MessageCodeService {
         Instant dbMaxDate = primaryMaxDate.isAfter(secondaryMaxDate) ? primaryMaxDate : secondaryMaxDate;
         McpProviderInfo providerInfo = cacheProvider.code().info();
         if (Objects.isNull(providerInfo)
-                || Objects.isNull(providerInfo.getMaxUpdatedDtm())
-                || dbMaxDate.isAfter(providerInfo.getMaxUpdatedDtm())) {
+            || Objects.isNull(providerInfo.getMaxUpdatedDtm())
+            || dbMaxDate.isAfter(providerInfo.getMaxUpdatedDtm())) {
             McpQuery query = new McpQuery();
             query.setLimit(null);
             cacheProvider.code().delete(query);
@@ -120,30 +121,35 @@ public class MessageCodeServiceImpl implements MessageCodeService {
     }
 
     @Override
-    public List<MessageCodeDto> listAll() {
+    public List<GetMessageCodeDto> listAll() {
 
-        return namedParameterJdbcTemplate.query(
-                """
-                        select rpad(p.code, 4, 0) + s.code as code,
-                               ifnull(s.level, p.level)    as level,
-                               s.consumer                  as consumer,
-                               s.description               as description,
-                               s.updated_dtm               as updatedDtm
-                        from message_code_secondary s
-                                 cross join message_code_primary p
-                        where p.code <> 0
-                        union
-                        select p.code,
-                               p.level,
-                               s.consumer,
-                               p.description,
-                               p.updated_dtm
-                        from message_code_primary p
-                                 cross join (select distinct consumer from message_code_secondary) as s
-                        """,
-                new HashMap<>(),
-                new BeanPropertyRowMapper<>(MessageCodeDto.class)
-        );
+        return
+                namedParameterJdbcTemplate.query(
+                                """
+                                        select p.code                   as primary_code,
+                                               s.code                   as secondary_code,
+                                               ifnull(s.level, p.level) as level,
+                                               s.consumer               as consumer,
+                                               s.description            as description,
+                                               s.updated_dtm            as updated_dtm
+                                        from message_code_secondary s
+                                                 cross join message_code_primary p
+                                        union
+                                        select p.code as primary_code,
+                                               null   as secondary_code,
+                                               p.level,
+                                               s.consumer,
+                                               p.description,
+                                               p.updated_dtm
+                                        from message_code_primary p
+                                                 cross join (select distinct consumer from message_code_secondary) as s;
+                                        """,
+                                new HashMap<>(),
+                                new BeanPropertyRowMapper<>(MessageCombineBo.class)
+                        )
+                        .stream()
+                        .map(MessagePojoUtils::convert2Dto)
+                        .toList();
     }
 
 }

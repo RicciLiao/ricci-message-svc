@@ -1,7 +1,7 @@
 create table message_code_primary
 (
     id          bigint auto_increment primary key,
-    code        bigint       not null comment 'message identity code.',
+    code        decimal(2)   not null comment 'message identity code.',
     level       char         not null comment 'I is Info, W is Warning, E is Error.',
     description varchar(255) not null comment 'message content.',
     created_by  bigint       not null,
