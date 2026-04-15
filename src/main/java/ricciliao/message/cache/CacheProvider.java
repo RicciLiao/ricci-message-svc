@@ -5,22 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ricciliao.message.cache.pojo.MessageCodeCacheDto;
-import ricciliao.x.starter.mcp.ConsumerCacheRestService;
+import ricciliao.x.starter.mcp.McpConsumerRestService;
 
 @Component("cacheProvider")
 public class CacheProvider {
 
-    private ConsumerCacheRestService<MessageCodeCacheDto> codeConsumerCacheRestService;
+    private McpConsumerRestService<MessageCodeCacheDto> codeConsumerRestService;
 
-    @Qualifier("codeConsumerCacheRestService")
+    @Qualifier("codeMcpConsumerRestService")
     @Autowired
-    public void setCodeConsumerCacheRestService(ConsumerCacheRestService<MessageCodeCacheDto> codeConsumerCacheRestService) {
-        this.codeConsumerCacheRestService = codeConsumerCacheRestService;
+    public void setCodeConsumerRestService(McpConsumerRestService<MessageCodeCacheDto> codeConsumerRestService) {
+        this.codeConsumerRestService = codeConsumerRestService;
     }
 
-    public ConsumerCacheRestService<MessageCodeCacheDto> code() {
+    public McpConsumerRestService<MessageCodeCacheDto> code() {
 
-        return codeConsumerCacheRestService;
+        return codeConsumerRestService;
     }
 
 }
