@@ -15,6 +15,7 @@ import ricciliao.message.service.MessageCodeService;
 import ricciliao.message.utils.MessagePojoUtils;
 import ricciliao.x.component.payload.SimplePayloadData;
 import ricciliao.x.mcp.ConsumerCache;
+import ricciliao.x.mcp.McpCacheIdListDto;
 import ricciliao.x.mcp.McpProviderInfo;
 import ricciliao.x.mcp.query.McpCriteria;
 import ricciliao.x.mcp.query.McpQuery;
@@ -94,12 +95,11 @@ public class MessageCodeServiceImpl implements MessageCodeService {
         Instant secondaryMaxDate = messageCodeSecondaryRepository.refreshCache();
         Instant dbMaxDate = primaryMaxDate.isAfter(secondaryMaxDate) ? primaryMaxDate : secondaryMaxDate;
         McpProviderInfo providerInfo = cacheProvider.code().info();
-        if (Objects.isNull(providerInfo)
+        if (focus
+            || Objects.isNull(providerInfo)
             || Objects.isNull(providerInfo.getMaxUpdatedDtm())
             || dbMaxDate.isAfter(providerInfo.getMaxUpdatedDtm())) {
-            McpQuery query = new McpQuery();
-            query.setLimit(null);
-            cacheProvider.code().delete(query);
+            cacheProvider.code().delete(new McpCacheIdListDto());
             SimplePayloadData.Bool bool = cacheProvider.code().create(
                     this.listAll().stream()
                             .map(dto -> {

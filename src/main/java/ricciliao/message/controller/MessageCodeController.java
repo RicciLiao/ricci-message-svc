@@ -43,7 +43,7 @@ public class MessageCodeController {
     @GetMapping("/refreshCache")
     public Response<PayloadData> refreshCache() {
 
-        return ResponseUtils.success(SimplePayloadData.of(messageCodeService.refreshCache(false)));
+        return ResponseUtils.success(SimplePayloadData.of(messageCodeService.refreshCache(true)));
     }
 
     @Operation
