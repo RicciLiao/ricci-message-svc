@@ -6,45 +6,33 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
 @Entity
 @Table(name = "message_code_secondary")
-public class MessageCodeSecondaryPo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class MessageCodeSecondaryPo implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 4397359772032131721L;
+    
     private Long id;
-
-    @Column(name = "code", nullable = false)
     private Long code;
-
-    @Column(name = "consumer", nullable = false, length = 50)
     private String consumer;
-
-    @Column(name = "level")
     private Character level;
-
-    @Column(name = "description", nullable = false)
     private String description;
-
-    @Column(name = "created_by", nullable = false)
     private Long createdBy;
-
-    @Column(name = "created_dtm", nullable = false)
     private Instant createdDtm;
-
-    @Column(name = "updated_by", nullable = false)
     private Long updatedBy;
-
-    @Column(name = "updated_dtm", nullable = false)
     private Instant updatedDtm;
-
-    @Column(name = "version", nullable = false)
     private Instant version;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -53,6 +41,7 @@ public class MessageCodeSecondaryPo {
         this.id = id;
     }
 
+    @Column(name = "code")
     public Long getCode() {
         return code;
     }
@@ -61,6 +50,7 @@ public class MessageCodeSecondaryPo {
         this.code = code;
     }
 
+    @Column(name = "consumer")
     public String getConsumer() {
         return consumer;
     }
@@ -69,6 +59,7 @@ public class MessageCodeSecondaryPo {
         this.consumer = consumer;
     }
 
+    @Column(name = "level")
     public Character getLevel() {
         return level;
     }
@@ -77,6 +68,7 @@ public class MessageCodeSecondaryPo {
         this.level = level;
     }
 
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -85,6 +77,7 @@ public class MessageCodeSecondaryPo {
         this.description = description;
     }
 
+    @Column(name = "created_by")
     public Long getCreatedBy() {
         return createdBy;
     }
@@ -93,6 +86,7 @@ public class MessageCodeSecondaryPo {
         this.createdBy = createdBy;
     }
 
+    @Column(name = "created_dtm")
     public Instant getCreatedDtm() {
         return createdDtm;
     }
@@ -101,6 +95,7 @@ public class MessageCodeSecondaryPo {
         this.createdDtm = createdDtm;
     }
 
+    @Column(name = "updated_by")
     public Long getUpdatedBy() {
         return updatedBy;
     }
@@ -109,6 +104,7 @@ public class MessageCodeSecondaryPo {
         this.updatedBy = updatedBy;
     }
 
+    @Column(name = "updated_dtm")
     public Instant getUpdatedDtm() {
         return updatedDtm;
     }
@@ -117,6 +113,8 @@ public class MessageCodeSecondaryPo {
         this.updatedDtm = updatedDtm;
     }
 
+    @Version
+    @Column(name = "version")
     public Instant getVersion() {
         return version;
     }
